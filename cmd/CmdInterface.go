@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/diamondburned/arikawa/v3/api"
@@ -23,11 +24,22 @@ func RegisterCommand(command Command) {
 }
 
 func ErrorResponse(err error) *api.InteractionResponseData {
+	str := err.Error()
+	var data json.RawMessage
+	json.Unmarshal([]byte(str), &data)
+
+	var lang string
+	if data != nil {
+		m, _ := json.MarshalIndent(data, "", "  ")
+		str = string(m)
+		lang = "json"
+	}
+
 	return &api.InteractionResponseData{
 		Embeds: &[]discord.Embed{{
 			Title:       "😳 OOPSIE WOOPSIE!!",
 			Footer:      &discord.EmbedFooter{Text: "Uwu We made a fucky wucky!!"},
-			Description: "Error\n" + DiscordCodeBlock("", err.Error()),
+			Description: "Error\n" + DiscordCodeBlock(lang, str),
 		}},
 		// Flags:           discord.EphemeralMessage,
 		AllowedMentions: &api.AllowedMentions{},
