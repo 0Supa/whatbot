@@ -1,4 +1,4 @@
-module github.com/0supa/degen-go
+module github.com/0supa/degen
 
 go 1.21.6
 

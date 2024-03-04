@@ -9,10 +9,10 @@ import (
 	"sync"
 	"time"
 
-	discordClient "github.com/0supa/degen-go/client/discord"
-	"github.com/0supa/degen-go/client/pwd"
-	"github.com/0supa/degen-go/client/sql"
-	"github.com/0supa/degen-go/client/store"
+	discordClient "github.com/0supa/degen/client/discord"
+	"github.com/0supa/degen/client/pwd"
+	"github.com/0supa/degen/client/sql"
+	"github.com/0supa/degen/client/store"
 	"github.com/diamondburned/arikawa/v3/api"
 	regexp "github.com/wasilibs/go-re2"
 )
