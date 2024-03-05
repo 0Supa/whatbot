@@ -21,7 +21,7 @@ func init() {
 			runtime.ReadMemStats(&m)
 
 			res := "# <a:gopherDance:1203488020389437480> Pong!\n" +
-				DiscordCodeBlock("md",
+				CodeBlock("md",
 					fmt.Sprintf("# %s\n- TotalAlloc: %v MiB\n- NumGC: %v\n- NumGoroutine: %v",
 						runtime.Version(), m.TotalAlloc/1024/1024, m.NumGC, runtime.NumGoroutine()))
 

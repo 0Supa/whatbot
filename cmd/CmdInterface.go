@@ -39,7 +39,7 @@ func ErrorResponse(err error) *api.InteractionResponseData {
 		Embeds: &[]discord.Embed{{
 			Title:       "😳 OOPSIE WOOPSIE!!",
 			Footer:      &discord.EmbedFooter{Text: "Uwu We made a fucky wucky!!"},
-			Description: "Error\n" + DiscordCodeBlock(lang, str),
+			Description: "Error\n" + CodeBlock(lang, str),
 		}},
 		// Flags:           discord.EphemeralMessage,
 		AllowedMentions: &api.AllowedMentions{},

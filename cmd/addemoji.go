@@ -75,7 +75,7 @@ func init() {
 				}
 
 				if fileRes.StatusCode != http.StatusOK {
-					builder.WriteString(fmt.Sprintf("\n❌ Failed fetching %s emoji __:%s:__ %s\n", emojiType, alias, DiscordCodeBlock("", fileRes.Status)))
+					builder.WriteString(fmt.Sprintf("\n❌ Failed fetching %s emoji __:%s:__ %s\n", emojiType, alias, CodeBlock("", fileRes.Status)))
 					continue
 				}
 
@@ -93,7 +93,7 @@ func init() {
 					},
 				})
 				if err != nil {
-					builder.WriteString(fmt.Sprintf("\n❌ Failed adding %s emoji __:%s:__ %s\n", emojiType, alias, DiscordCodeBlock("", err.Error())))
+					builder.WriteString(fmt.Sprintf("\n❌ Failed adding %s emoji __:%s:__ %s\n", emojiType, alias, CodeBlock("", err.Error())))
 					continue
 				}
 
