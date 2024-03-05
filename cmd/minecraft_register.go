@@ -51,7 +51,7 @@ func init() {
 		DiscordHandler: func(ctx context.Context, cmd cmdroute.CommandData) *api.InteractionResponseData {
 			if !slices.Contains(guilds, cmd.Event.GuildID) {
 				return &api.InteractionResponseData{
-					Content: option.NewNullableString("You aren't allowed to run this command in this server."),
+					Content: option.NewNullableString("You aren't allowed to run this command in this server"),
 					Flags:   discord.EphemeralMessage,
 				}
 			}
@@ -59,26 +59,26 @@ func init() {
 			discordUID := cmd.Event.SenderID()
 
 			if slices.Contains(bannedUsers, discordUID) {
-				return Response("Your account is prohibited from using this command.")
+				return Response("Your account is prohibited from using this command")
 			}
 
 			if !slices.Contains(channelIDs, cmd.Event.ChannelID) {
 				return &api.InteractionResponseData{
-					Content: option.NewNullableString("Please use this command in <#1206783236387250266>."),
+					Content: option.NewNullableString("Please use this command in <#1206783236387250266>"),
 					Flags:   discord.EphemeralMessage,
 				}
 			}
 
 			if userKeys[discordUID] != nil && time.Now().Before(userKeys[discordUID].Expiry) {
 				return &api.InteractionResponseData{
-					Content: option.NewNullableString("Please wait some time before making a request again."),
+					Content: option.NewNullableString("Please wait some time before making a request again"),
 					Flags:   discord.EphemeralMessage,
 				}
 			}
 
 			player, err := sql.GetPlayer("", discordUID.String())
 			if err == nil {
-				return Response("%s, you are already registered on the server.", player.Name)
+				return Response("%s, you are already registered on the server", player.Name)
 			}
 			if err != sql.ErrNil {
 				return ErrorResponse(err)
