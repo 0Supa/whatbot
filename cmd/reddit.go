@@ -77,6 +77,7 @@ type RedditData struct {
 type RedditResponse struct {
 	Kind    string     `json:"kind"`
 	Data    RedditData `json:"data"`
+	Reason  string     `json:"reason"`
 	Message string     `json:"message"`
 	Error   int        `json:"error"`
 }
@@ -133,6 +134,7 @@ func init() {
 
 			entry := redditCache[subreddit]
 			if time.Now().After(entry.expiry) {
+				// doesn't mime api status code
 				req, _ := http.NewRequest("GET", "https://y.supa.sh/?u="+
 					url.QueryEscape(fmt.Sprintf("https://www.reddit.com/r/%s/hot.json?limit=%v", subreddit, postLimit)), nil)
 				req.Header.Set("User-Agent", client.GetFakeUA())
@@ -143,10 +145,7 @@ func init() {
 				}
 
 				if res.StatusCode != http.StatusOK {
-					if res.StatusCode == http.StatusNotFound {
-						return Response("Subreddit not found, please input only the subreddit name")
-					}
-					return ErrorResponse(errors.New("Failed getting subreddit data: " + res.Status))
+					return ErrorResponse(errors.New("Failed contacting proxy: " + res.Status))
 				}
 
 				reddit := RedditResponse{}
@@ -155,6 +154,12 @@ func init() {
 				}
 
 				if reddit.Error != 0 {
+					if reddit.Reason == "banned" {
+						return Response("Subreddit banned <:MONKA:1226590776008511498>")
+					}
+					if reddit.Error == 404 {
+						return Response("Subreddit not found")
+					}
 					return ErrorResponse(fmt.Errorf("%v", reddit))
 				}
 
