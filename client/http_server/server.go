@@ -111,9 +111,9 @@ func init() {
 			return
 		}
 
-		_, err := sql.GetPlayer(p.Username, "")
+		u, err := sql.GetPlayer(p.Username, "")
 
-		if err == nil {
+		if u.Discord != discordReq.User.ID.String() && err == nil {
 			resError(w, "player already whitelisted", http.StatusBadRequest)
 			return
 		}
@@ -135,9 +135,11 @@ func init() {
 			resError(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		_, err = sql.DB.Exec("INSERT INTO noble_whitelist (Name, UUID, Discord, Whitelisted) VALUES (?, ?, ?, ?)", p.Username, nil, discordReq.User.ID, 1)
-		if err != nil {
-			resError(w, err.Error(), http.StatusInternalServerError)
+		if u.ID == 0 {
+			_, err = sql.DB.Exec("INSERT INTO noble_whitelist (Name, UUID, Discord, Whitelisted) VALUES (?, ?, ?, ?)", p.Username, nil, discordReq.User.ID, 1)
+			if err != nil {
+				resError(w, err.Error(), http.StatusInternalServerError)
+			}
 		}
 
 		w.Header().Set("Content-Type", "application/json")
