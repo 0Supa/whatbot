@@ -101,7 +101,7 @@ func init() {
 				return ErrorResponse(err)
 			}
 
-			_, err = discordClient.Handler.State.SendMessage(dm.ID, fmt.Sprintf("Please [**click here**](https://dulas.supa.sh/mc/register/?key=%s) in order to register.\nDo not share this link with anyone!", hash))
+			_, err = discordClient.Handler.State.SendMessage(dm.ID, fmt.Sprintf("Please [**click here**](https://duli.supa.sh/mc/register/?key=%s) in order to register.\nDo not share this link with anyone!", hash))
 			if err != nil {
 				return ErrorResponse(err)
 			}
