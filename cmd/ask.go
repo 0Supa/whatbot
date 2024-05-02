@@ -41,7 +41,7 @@ Prompt:`,
 }
 
 func init() {
-	var model = "@cf/mistral/mistral-7b-instruct-v0.1"
+	var model = "@cf/meta/llama-3-8b-instruct"
 	RegisterCommand(Command{
 		Name: "ask",
 		DiscordData: api.CreateCommandData{
