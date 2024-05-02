@@ -77,7 +77,7 @@ func init() {
 			}
 
 			player, err := sql.GetPlayer("", discordUID.String())
-			if err == nil {
+			if player.UUID != "" {
 				return Response("%s, you are already registered on the server", player.Name)
 			}
 			if err != sql.ErrNil {
