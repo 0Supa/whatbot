@@ -46,7 +46,7 @@ func init() {
 		Name: "ask",
 		DiscordData: api.CreateCommandData{
 			Name:        "ask",
-			Description: "Mistral 7B Text Generation LLM",
+			Description: "Text Generation LLM",
 			Options: []discord.CommandOption{
 				&discord.StringOption{
 					OptionName:  "prompt",
