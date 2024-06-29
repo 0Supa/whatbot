@@ -97,11 +97,7 @@ func init() {
 					continue
 				}
 
-				idPrefix := ""
-				if createdEmoji.Animated {
-					idPrefix = "a"
-				}
-				builder.WriteString(fmt.Sprintf("\n✅ Successfully added %s emoji <%s:%s>", emojiType, idPrefix, createdEmoji.APIString()))
+				builder.WriteString(fmt.Sprintf("\n✅ Successfully added %s emoji %s", emojiType, createdEmoji.String()))
 			}
 
 			return Response(builder.String())
