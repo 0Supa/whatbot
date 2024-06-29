@@ -155,7 +155,7 @@ func init() {
 
 				if reddit.Error != 0 {
 					if reddit.Reason == "banned" {
-						return Response("Subreddit banned <:MONKA:1226590776008511498>")
+						return Response("Subreddit banned %s", GetBestGuildEmoji(cmd.Event.GuildID, "MONKA", "monkaS", "pepeA", "pepeS", "MODS"))
 					}
 					if reddit.Error == 404 {
 						return Response("Subreddit not found")

@@ -3,7 +3,9 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
+	discordClient "github.com/0supa/degen/client/discord"
 	"github.com/diamondburned/arikawa/v3/api"
 	"github.com/diamondburned/arikawa/v3/api/cmdroute"
 	"github.com/diamondburned/arikawa/v3/discord"
@@ -51,4 +53,19 @@ func Response(format string, a ...any) *api.InteractionResponseData {
 		AllowedMentions: &api.AllowedMentions{},
 		Content:         option.NewNullableString(fmt.Sprintf(format, a...)),
 	}
+}
+
+func GetBestGuildEmoji(guildID discord.GuildID, name ...string) discord.APIEmoji {
+	es, err := discordClient.Handler.Emojis(guildID)
+	if err == nil {
+		for _, emoji := range es {
+			for _, n := range name {
+				if strings.EqualFold(emoji.Name, n) {
+					return emoji.APIString()
+				}
+			}
+		}
+	}
+
+	return discord.APIEmoji(":" + name[0] + ":")
 }
