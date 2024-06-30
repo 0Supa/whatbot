@@ -75,11 +75,12 @@ type RedditData struct {
 }
 
 type RedditResponse struct {
-	Kind    string     `json:"kind"`
-	Data    RedditData `json:"data"`
-	Reason  string     `json:"reason"`
-	Message string     `json:"message"`
-	Error   int        `json:"error"`
+	Kind              string     `json:"kind"`
+	Data              RedditData `json:"data"`
+	Reason            string     `json:"reason"`
+	Message           string     `json:"message"`
+	QuarantineMessage string     `json:"quarantine_message"`
+	Error             int        `json:"error"`
 }
 
 type RedditCacheEntry struct {
@@ -155,7 +156,10 @@ func init() {
 
 				if reddit.Error != 0 {
 					if reddit.Reason == "banned" {
-						return Response("Subreddit banned %s", GetBestGuildEmoji(cmd.Event.GuildID, "MONKA", "monkaS", "pepeA", "pepeS", "MODS"))
+						return Response("Subreddit is banned %s", GetBestGuildEmoji(cmd.Event.GuildID, "MONKA", "monkaS", "pepeA", "pepeS", "MODS"))
+					}
+					if reddit.Reason == "quarantined" {
+						return Response("Subreddit is quarantined\n> %s", html.UnescapeString(reddit.QuarantineMessage))
 					}
 					if reddit.Error == 404 {
 						return Response("Subreddit not found")
