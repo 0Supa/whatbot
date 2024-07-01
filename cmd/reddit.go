@@ -161,6 +161,9 @@ func init() {
 					if reddit.Reason == "quarantined" {
 						return Response("Subreddit is quarantined\n> %s", html.UnescapeString(reddit.QuarantineMessage))
 					}
+					if reddit.Reason == "private" {
+						return Response("Subreddit is private")
+					}
 					if reddit.Error == 404 {
 						return Response("Subreddit not found")
 					}
