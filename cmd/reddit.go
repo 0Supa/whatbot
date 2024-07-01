@@ -155,19 +155,23 @@ func init() {
 				}
 
 				if reddit.Error != 0 {
-					if reddit.Reason == "banned" {
+					switch reddit.Reason {
+					case "banned":
 						return Response("Subreddit is banned %s", GetBestGuildEmoji(cmd.Event.GuildID, "MONKA", "monkaS", "pepeA", "pepeS", "MODS"))
-					}
-					if reddit.Reason == "quarantined" {
+					case "quarantined":
 						return Response("Subreddit is quarantined\n> %s", html.UnescapeString(reddit.QuarantineMessage))
-					}
-					if reddit.Reason == "private" {
+					case "private":
 						return Response("Subreddit is private")
 					}
+
 					if reddit.Error == 404 {
 						return Response("Subreddit not found")
 					}
 					return ErrorResponse(fmt.Errorf("%v", reddit))
+				}
+
+				if reddit.Data.Dist == 0 {
+					return Response("Subreddit empty or not found")
 				}
 
 				entry.expiry = time.Now().Add(30 * time.Minute)
