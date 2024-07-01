@@ -57,6 +57,7 @@ type RedditPostData struct {
 	Score         int                            `json:"score"`
 	Comments      int                            `json:"num_comments"`
 	DirectURL     string                         `json:"url_overridden_by_dest"`
+	URL           string                         `json:"url"`
 	Gallery       bool                           `json:"is_gallery"`
 	NSFW          bool                           `json:"over_18"`
 	Stickied      bool                           `json:"stickied"`
@@ -222,7 +223,7 @@ func init() {
 						if len(embeds) < 10 {
 							embeds = append(embeds, discord.Embed{
 								Title: fmt.Sprintf("Gallery (%d images)", len(post.Data.MediaMetadata)),
-								URL:   post.Data.DirectURL,
+								URL:   post.Data.URL,
 								Image: &discord.EmbedImage{
 									URL: mediaURL,
 								},
