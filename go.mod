@@ -1,4 +1,4 @@
-module github.com/0supa/degen
+module github.com/0supa/whatbot
 
 go 1.21.6
 

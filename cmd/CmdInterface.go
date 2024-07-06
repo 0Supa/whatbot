@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	discordClient "github.com/0supa/degen/client/discord"
+	discordClient "github.com/0supa/whatbot/client/discord"
 	"github.com/diamondburned/arikawa/v3/api"
 	"github.com/diamondburned/arikawa/v3/api/cmdroute"
 	"github.com/diamondburned/arikawa/v3/discord"
