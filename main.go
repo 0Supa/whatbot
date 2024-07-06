@@ -112,11 +112,6 @@ func main() {
 
 			if err != nil {
 				log.Println("failed to send interaction callback:", err)
-
-				h.State.RespondInteraction(e.ID, e.Token, api.InteractionResponse{
-					Type: api.MessageInteractionWithSource,
-					Data: cmd.ErrorResponse(err),
-				})
 			}
 		}()
 
