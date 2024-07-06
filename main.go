@@ -103,11 +103,11 @@ func main() {
 			if ack {
 				_, err = h.State.FollowUpInteraction(e.AppID, e.Token, *respData)
 			} else {
+				ack = true
 				err = h.State.RespondInteraction(e.ID, e.Token, api.InteractionResponse{
 					Type: api.MessageInteractionWithSource,
 					Data: respData,
 				})
-				ack = true
 			}
 
 			if err != nil {
@@ -123,8 +123,8 @@ func main() {
 		go func() {
 			time.Sleep(time.Second * 2)
 			if !ack {
-				h.State.RespondInteraction(e.ID, e.Token, api.InteractionResponse{Type: api.DeferredMessageInteractionWithSource})
 				ack = true
+				h.State.RespondInteraction(e.ID, e.Token, api.InteractionResponse{Type: api.DeferredMessageInteractionWithSource})
 			}
 		}()
 	})
