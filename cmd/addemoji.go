@@ -24,7 +24,7 @@ func init() {
 			Options: []discord.CommandOption{
 				&discord.StringOption{
 					OptionName:  "emoji",
-					Description: "Emojis from other servers that you want to add",
+					Description: "Pick the emojis you want to add",
 					Required:    true,
 				},
 			},

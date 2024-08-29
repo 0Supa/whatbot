@@ -18,7 +18,7 @@ func init() {
 			Options: []discord.CommandOption{
 				&discord.UserOption{
 					OptionName:  "target",
-					Description: "The user you want to view the avatar from",
+					Description: "The user whose avatar you want to view",
 					Required:    true,
 				},
 			},

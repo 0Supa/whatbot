@@ -28,11 +28,11 @@ func init() {
 		Name: "nekos",
 		DiscordData: api.CreateCommandData{
 			Name:        "nekos",
-			Description: "Get a weeb gif for a specific action",
+			Description: "Weeabo gifs",
 			Options: []discord.CommandOption{
 				&discord.StringOption{
 					OptionName:  "action",
-					Description: "The action you want a gif for",
+					Description: "The gif's action",
 					Required:    true,
 					Choices: []discord.StringChoice{
 						{Name: "Kiss", Value: "kiss"},
@@ -44,7 +44,7 @@ func init() {
 				},
 				&discord.UserOption{
 					OptionName:  "receiver",
-					Description: "The user that gets your action",
+					Description: "The person receiving your action",
 					Required:    false,
 				},
 			},

@@ -30,7 +30,7 @@ func init() {
 		Name: "waifupics",
 		DiscordData: api.CreateCommandData{
 			Name:        "waifupics",
-			Description: "Get a waifu.pics image for your chosen category",
+			Description: "Fetch an waifu.pics image of your chosen category",
 			Options: []discord.CommandOption{
 				&discord.SubcommandOption{
 					OptionName:  "sfw",

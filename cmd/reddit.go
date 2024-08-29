@@ -104,7 +104,7 @@ func init() {
 			Options: []discord.CommandOption{
 				&discord.StringOption{
 					OptionName:  "subreddit",
-					Description: "The subreddit's name you want to get a random post from",
+					Description: "The name of the subreddit you want to fetch a random post from",
 					Required:    true,
 				},
 			},
