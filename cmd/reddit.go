@@ -247,7 +247,7 @@ func init() {
 						`
 > [__r/%s__](<https://www.reddit.com/r/%s/>) • [u/%s](<https://www.reddit.com/u/%s/>)
 > %s <t:%d:R>
-### [%s](<https://reddit.com/%s>)
+### [%s](<https://redd.it/%s>)
 %s%s
 `,
 						post.Data.Subreddit, post.Data.Subreddit,
