@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"html"
+	"io"
 	"math/rand"
 	"net/http"
 	"strings"
@@ -141,9 +142,25 @@ func init() {
 				}
 
 				if res.StatusCode != http.StatusOK {
-					if res.StatusCode == http.StatusNotFound {
-						return Response("Subreddit not found")
+					switch res.StatusCode {
+					case http.StatusTooManyRequests:
+						return Response("Too many requests! Please try again later")
+					case http.StatusInternalServerError:
+						b, err := io.ReadAll(res.Body)
+						if err != nil {
+							return ErrorResponse(err)
+						}
+
+						reason := string(b)
+						switch reason {
+						case "banned":
+						case "quarantined":
+							return Response("Subreddit is %s %s", reason, GetBestGuildEmoji(cmd.Event.GuildID, "MONKA", "monkaS", "pepeA", "pepeS", "MODS"))
+						case "private":
+							return Response("Subreddit is private")
+						}
 					}
+
 					return ErrorResponse(errors.New(res.Status))
 				}
 
@@ -153,23 +170,11 @@ func init() {
 				}
 
 				if reddit.Error != 0 {
-					switch reddit.Reason {
-					case "banned":
-						return Response("Subreddit is banned %s", GetBestGuildEmoji(cmd.Event.GuildID, "MONKA", "monkaS", "pepeA", "pepeS", "MODS"))
-					case "quarantined":
-						return Response("Subreddit is quarantined\n> %s", html.UnescapeString(reddit.QuarantineMessage))
-					case "private":
-						return Response("Subreddit is private")
-					}
-
-					if reddit.Error == 404 {
-						return Response("Subreddit not found")
-					}
 					return ErrorResponse(fmt.Errorf("%v", reddit))
 				}
 
 				if reddit.Data.Dist == 0 {
-					return Response("Subreddit empty or not found")
+					return Response("No posts were found")
 				}
 
 				entry.expiry = time.Now().Add(30 * time.Minute)
