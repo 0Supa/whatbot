@@ -8,7 +8,6 @@ import (
 	"html"
 	"math/rand"
 	"net/http"
-	"net/url"
 	"strings"
 	"time"
 
@@ -93,7 +92,7 @@ var redditCache = map[string]RedditCacheEntry{}
 
 var repeatedPosts = map[string]map[string]bool{}
 
-var postLimit = 40
+const postLimit = 40
 
 func init() {
 	RegisterCommand(Command{
@@ -136,18 +135,16 @@ func init() {
 
 			entry := redditCache[subreddit]
 			if time.Now().After(entry.expiry) {
-				// doesn't mime api status code
-				req, _ := http.NewRequest("GET", "https://y.supa.sh/?u="+
-					url.QueryEscape(fmt.Sprintf("https://www.reddit.com/r/%s/hot.json?limit=%v", subreddit, postLimit)), nil)
-				req.Header.Set("User-Agent", client.GetFakeUA())
-
-				res, err := client.HTTP.Do(req)
+				res, err := client.HTTP.Get(fmt.Sprintf("https://reddit.supa.gay/r/%s/hot.json?limit=%v", subreddit, postLimit))
 				if err != nil {
 					return ErrorResponse(err)
 				}
 
 				if res.StatusCode != http.StatusOK {
-					return ErrorResponse(errors.New("Failed contacting proxy: " + res.Status))
+					if res.StatusCode == http.StatusNotFound {
+						return Response("Subreddit not found")
+					}
+					return ErrorResponse(errors.New(res.Status))
 				}
 
 				reddit := RedditResponse{}
