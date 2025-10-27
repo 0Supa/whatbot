@@ -153,8 +153,7 @@ func init() {
 
 						reason := string(b)
 						switch reason {
-						case "banned":
-						case "quarantined":
+						case "banned", "quarantined":
 							return Response("Subreddit is %s %s", reason, GetBestGuildEmoji(cmd.Event.GuildID, "MONKA", "monkaS", "pepeA", "pepeS", "MODS"))
 						case "private":
 							return Response("Subreddit is private")
